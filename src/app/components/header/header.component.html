@@ -11,23 +11,29 @@
 
     <div class="form d-flex align-items-center" *ngIf="statisticService.currentStatistic.yearSelector">
       <ngx-fa name="calendar" size="lg"></ngx-fa>
-      <select id="select">
-        <option *ngFor="let year of getYears()">{{year}}</option>
+      <select id="select" (change)="changeYear($event)">
+        <option
+          *ngFor="let year of getYears()"
+          [selected]="year === statisticService.currentStatistic.yearSelector"
+        >{{year}}</option>
       </select>
     </div>
   </div>
 
   <div class="d-flex scroll-x">
     <div class="card shadow">
-      <div style="width: 100%">
+      <div style="width: 100%; height: 100%">
         <app-legend [dataSets]="statisticService.currentStatistic.dataSet"></app-legend>
       </div>
     </div>
 
-    <div class="card card-data shadow" *ngFor="let data of statisticService.currentStatistic.data">
-<!--      <h1 class="text-gradient">{{showData(data)[1]}}</h1>-->
-<!--      <h2>{{showData(data)[2]}}</h2>-->
-      {{data}}
+    <div
+      *ngFor="let data of statisticService.currentStatistic.data; let index = index"
+      class="card card-data shadow"
+      [style]="{'animation-delay': index + '00ms'}">
+      <h1 class="text-gradient">{{showData(data)[0]}}</h1>
+      <h2>{{showData(data)[1]}}</h2>
+      <h2>{{showData(data)[2]}}</h2>
     </div>
   </div>
 </header>

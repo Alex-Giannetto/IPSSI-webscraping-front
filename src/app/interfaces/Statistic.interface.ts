@@ -7,7 +7,7 @@ export class StatisticInterface {
   dataSet: ChartDataSets[]
   labels: Label[]
   data: string[]
-  yearSelector?: boolean
+  yearSelector?: number|string
 }
 
 export const colors = ['#00D394', '#D9198B']

@@ -15,7 +15,7 @@ export class GraphicComponent implements OnInit {
   barChartOptions: ChartOptions = {
     responsive: true, maintainAspectRatio: false, scales: {
       xAxes: [{ gridLines: { color: '#232850' } }],
-      yAxes: [{ gridLines: { color: '#232850' }, id: 'y-0' }, { id: 'y-1', type: 'linear', position: 'right' }],
+      yAxes: [{ id: 'y-0', gridLines: { color: '#232850' } }]
     }
   }
 
@@ -23,9 +23,16 @@ export class GraphicComponent implements OnInit {
 
   ngOnInit(): void {
     this.statisticService.onChange.subscribe(statistic => {
-      // this.barChartOptions.scales.yAxes = statistic.dataSet.length === 2 ?
-      //   [{ id: 'y-0', type: 'linear', position: 'left' }, { id: 'y-1', type: 'linear', position: 'right' }] :
-      //   [{ id: 'y-0', gridLines: { color: '#232850' } }]
+      if (this.chart) {
+        const config = { ...this.barChartOptions }
+        config.scales.yAxes = statistic.dataSet.length === 2 ?
+          [{ id: 'y-0', type: 'linear', position: 'left' }, { id: 'y-1', type: 'linear', position: 'right' }] :
+          [{ id: 'y-0', gridLines: { color: '#232850' } }]
+        this.barChartOptions = config
+
+
+        setTimeout(() => this.chart.update(), 10)
+      }
     })
   }
 }

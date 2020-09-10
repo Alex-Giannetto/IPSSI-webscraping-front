@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component'
 import { NgxFontAwesomeModule } from 'ngx-font-awesome'
 import { GraphicComponent } from './components/graphic/graphic.component'
 import { HttpClientModule } from '@angular/common/http'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http'
     ChartsModule,
     NgxFontAwesomeModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

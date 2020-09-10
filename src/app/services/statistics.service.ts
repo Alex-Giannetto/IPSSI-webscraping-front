@@ -13,7 +13,7 @@ export class StatisticsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  async load(graphics: { url: string, yearSelector: boolean }[]): Promise<boolean> {
+  async load(graphics: { url: string, yearSelector?: number | string }[]): Promise<boolean> {
     if (graphics.length === 0) {
       return Promise.resolve(true)
     }
@@ -28,9 +28,10 @@ export class StatisticsService {
     return this.load(graphics)
   }
 
-  private async getData(data: { url: string, yearSelector: boolean }): Promise<StatisticInterface> {
+  async getData(data: { url: string, yearSelector?: number | string }): Promise<StatisticInterface> {
     try {
-      const resolve: any = await this.httpClient.get(data.url).toPromise()
+
+      const resolve: any = await this.httpClient.get(data.url + (data.yearSelector ?? '')).toPromise()
 
       const statistic: StatisticInterface = {
         title: resolve.title,
@@ -48,5 +49,4 @@ export class StatisticsService {
       return Promise.reject(e)
     }
   }
-
 }
