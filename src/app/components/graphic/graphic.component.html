@@ -1,0 +1,10 @@
+<div class="graph"  *ngIf="statisticService.currentStatistic">
+  <canvas
+    baseChart
+    [datasets]="statisticService.currentStatistic.dataSet"
+    [labels]="statisticService.currentStatistic.labels"
+    [options]="barChartOptions"
+    [legend]="false"
+    chartType="line"
+  ></canvas>
+</div>
