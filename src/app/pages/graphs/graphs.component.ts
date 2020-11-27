@@ -33,10 +33,10 @@ export class GraphsComponent implements OnInit, OnDestroy {
     const brands = this.vehicleService.sortVehiclesPerBrands(vehicle => !vehicle.puissance || !vehicle.prix)
     const data = Object.keys(brands).map(brand => {
       let price = 0
-      brands[brand].forEach(vehicle => price += parseFloat(`${vehicle.prix}`))
+      brands[brand].forEach(vehicle => price += (parseFloat(vehicle.prix) + (parseFloat(vehicle.first_loyer) /  parseFloat(vehicle.duree_location))))
       let power = 0
-      brands[brand].forEach(vehicle => power += parseFloat(`${vehicle.puissance}`))
-      return (power / price) * 100
+      brands[brand].forEach(vehicle => power += parseFloat(vehicle.puissance))
+      return price / power
     })
 
     this.statisticService.currentStatistic.next({
