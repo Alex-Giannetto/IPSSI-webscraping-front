@@ -59,7 +59,7 @@ export class GraphsComponent implements OnInit, OnDestroy {
     const brands = this.vehicleService.sortVehiclesPerBrands(vehicle => !vehicle.prix)
     const data = Object.keys(brands).map(brandName => {
       const brandArray = brands[brandName]
-      return brandArray.reduce((a, b) => a + parseFloat(`${b.prix}`), 0) / brandArray.length
+      return brandArray.reduce((a, b) => a + parseFloat(b.prix) + (parseFloat(b.first_loyer) /  parseFloat(b.duree_location)), 0) / brandArray.length
     })
 
     this.statisticService.currentStatistic.next({
