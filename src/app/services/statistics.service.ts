@@ -1,52 +1,28 @@
-import { EventEmitter, Injectable } from '@angular/core'
-import { colors, StatisticInterface } from '../interfaces/Statistic.interface'
-import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { StatisticInterface } from '../interfaces/Statistic.interface'
+import { BehaviorSubject } from 'rxjs'
+import { VehicleInterface } from '../interfaces/Vehicle.interface'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticsService {
   statistics: StatisticInterface[] = []
-  currentStatistic: StatisticInterface = null
+  currentStatistic: BehaviorSubject<StatisticInterface> = new BehaviorSubject<StatisticInterface>(null)
 
-  onChange: EventEmitter<StatisticInterface> = new EventEmitter<StatisticInterface>()
-
-  constructor(private httpClient: HttpClient) {}
-
-  async load(graphics: { url: string, yearSelector?: number | string }[]): Promise<boolean> {
-    if (graphics.length === 0) {
-      return Promise.resolve(true)
-    }
-    const statistic = await this.getData(graphics[0])
-
-    if (!this.currentStatistic) {
-      this.onChange.emit(statistic)
+  static getMinMaxDiff(brands: { [s: string]: VehicleInterface[] }, data: number[]): string {
+    const min = {
+      value: Math.min(...data),
+      label: Object.keys(brands)[data.indexOf(Math.min(...data))]
     }
 
-    this.statistics.push(statistic)
-    graphics.shift()
-    return this.load(graphics)
+    const max = {
+      value: Math.max(...data),
+      label: Object.keys(brands)[data.indexOf(Math.max(...data))]
+    }
+
+    const diff = Math.round(((max.value - min.value) / min.value) * 100)
+    return `+ ${diff}%\n${min.label} - ${max.label}`
   }
 
-  async getData(data: { url: string, yearSelector?: number | string }): Promise<StatisticInterface> {
-    try {
-
-      const resolve: any = await this.httpClient.get(data.url + (data.yearSelector ?? '')).toPromise()
-
-      const statistic: StatisticInterface = {
-        title: resolve.title,
-        url: data.url,
-        yearSelector: data.yearSelector,
-        dataSet: resolve.chart.data.map((chart, index) => ({
-          data: chart.value, label: chart.label, borderColor: colors[index], fill: false, yAxisID: `y-${index}`
-        })),
-        labels: resolve.chart.labels,
-        data: resolve.data
-      }
-
-      return Promise.resolve(statistic)
-    } catch (e) {
-      return Promise.reject(e)
-    }
-  }
 }

@@ -1,6 +1,9 @@
-<div class="grid">
-  <app-header></app-header>
-  <div style="height: 100%">
-    <app-graphic></app-graphic>
+<div class="grid" *ngIf="!state.loading">
+  <div class="section">
+    <app-header></app-header>
+    <div class="scrollable-content element">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
   </div>
 </div>

@@ -1,10 +1,11 @@
-<div class="graph"  *ngIf="statisticService.currentStatistic">
+<div class="graph"  *ngIf="statisticService.currentStatistic.getValue()">
   <canvas
     baseChart
-    [datasets]="statisticService.currentStatistic.dataSet"
-    [labels]="statisticService.currentStatistic.labels"
+    [datasets]="statisticService.currentStatistic.getValue().dataSet"
+    [labels]="statisticService.currentStatistic.getValue().labels"
     [options]="barChartOptions"
     [legend]="false"
-    chartType="line"
+    chartType="bar"
   ></canvas>
+
 </div>

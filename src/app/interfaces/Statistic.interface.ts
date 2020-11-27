@@ -3,11 +3,9 @@ import { Label } from 'ng2-charts'
 
 export class StatisticInterface {
   title: string
-  url: string
   dataSet: ChartDataSets[]
   labels: Label[]
   data: string[]
-  yearSelector?: number|string
 }
 
-export const colors = ['#00D394', '#D9198B']
+export const colors = ['#e7444b', '#D9198B', '#00D394']

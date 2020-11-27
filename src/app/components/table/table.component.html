@@ -1,0 +1,31 @@
+<div class="list">
+  <table>
+    <thead>
+    <tr>
+      <th *ngFor="let column of columns" (click)="sort(column.property)">
+        <ng-container *ngIf="column.displayName">
+          {{column.displayName}}
+          <ngx-fa [name]="getSortIcon(column.property)"></ngx-fa>
+        </ng-container>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let element of data">
+      <td *ngFor="let column of columns">
+        <ng-container *ngIf="column.type === 'image'">
+          <img [src]="element[column.property]" alt="vehicle image" width="100px">
+        </ng-container>
+        <ng-container *ngIf="column.type === 'link'">
+          <a [href]="element[column.property]" target="_blank">
+            <ngx-fa name="external-link"></ngx-fa>
+          </a>
+        </ng-container>
+        <ng-container *ngIf="!column.type">
+          {{element[column.property]}} {{column.suffix && element[column.property] ? column.suffix : ''}}
+        </ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

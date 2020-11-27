@@ -8,12 +8,14 @@
   color #fff
   outline none
 
-body
-  height 100vh
-  width 100vw
-  background-color #181C3A
-  padding 3vh 3vw
+html
+  height 100%
+  width 100%
 
+body
+  height 100%
+  width 100%
+  background-color #181C3A
 
 .d-flex
   display flex
@@ -69,12 +71,16 @@ body
 
   &--gradient
     background-image linear-gradient(to right, #F06617, #E53E53)
-    box-shadow 0 0 20px rgba(#000, .5)
+    box-shadow 0 0 20px rgba(#000, .3)
     color #fff
-
-.shadow
-  box-shadow 0 0 10px rgba(#1C2040, 0.5)
 
 .scroll-x
   max-width 100%
   overflow-x scroll
+
+.element
+  background #0A0E29
+  border-radius 10px
+
+  &--shadow
+    box-shadow 0 0 20px rgba(#000, .3)

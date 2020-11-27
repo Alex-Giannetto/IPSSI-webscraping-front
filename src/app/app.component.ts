@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { environment } from '../environments/environment'
+import { VehicleService } from './services/vehicle.service'
 import { StatisticsService } from './services/statistics.service'
 
 @Component({
@@ -8,11 +8,16 @@ import { StatisticsService } from './services/statistics.service'
   styleUrls: ['./app.component.styl']
 })
 export class AppComponent implements OnInit {
-  constructor(public statisticService: StatisticsService) {}
+
+  state = {
+    loading: true
+  }
+
+  constructor(private vehicleService: VehicleService, public statisticService: StatisticsService) {}
 
   async ngOnInit(): Promise<void> {
-    this.statisticService.onChange.subscribe(statistic => this.statisticService.currentStatistic = statistic)
-    await this.statisticService.load(environment.graphs)
+    await this.vehicleService.load()
+    this.state.loading = false
   }
 
 }

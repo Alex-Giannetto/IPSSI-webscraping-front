@@ -1,0 +1,22 @@
+<div class="d-flex flex-column footer">
+  <div class="title element" *ngIf="statisticService.currentStatistic.getValue()?.title">
+   TITRE DU GRAPHIQUE: {{statisticService.currentStatistic.getValue()?.title}}
+  </div>
+
+  <div class="d-flex scroll-x" *ngIf="statisticService.currentStatistic.getValue()">
+    <div class="card shadow">
+      <div style="width: 100%; height: 100%">
+        <app-legend [dataSets]="statisticService.currentStatistic.getValue().dataSet"></app-legend>
+      </div>
+    </div>
+
+        <div
+          *ngFor="let data of statisticService.currentStatistic.getValue().data; let index = index"
+          class="card card-data shadow element--shadow"
+          [style]="{'animation-delay': index + '00ms'}">
+          <h1 class="text-gradient">{{showData(data)[0]}}</h1>
+          <h2>{{showData(data)[1]}}</h2>
+          <h2>{{showData(data)[2]}}</h2>
+        </div>
+  </div>
+</div>

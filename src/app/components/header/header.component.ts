@@ -7,27 +7,17 @@ import { StatisticsService } from '../../services/statistics.service'
   styleUrls: ['./header.component.styl']
 })
 export class HeaderComponent {
-  constructor(public statisticService: StatisticsService) {}
+  pages: { label: string, link: string }[] = [
+    { label: 'Liste des vehicules', link: 'vehicle-list' },
+    { label: 'Ratio Prix/Puissance', link: 'power-cost-ratio' },
+    { label: 'Moyenne des prix par marques', link: 'price-brand' },
+    { label: 'Ratio Co2/Carburant', link: 'co2-fuel-ratio' },
+    { label: 'Coût annuel estimé', link: 'annual-cost' }
+  ]
 
-  getYears(): number[] {
-    const currentYear = new Date().getFullYear()
-    const years: number[] = []
-    for (let i = currentYear - 6; i >= 1990; i--) {
-      years.push(i)
-    }
-    return years
-  }
+  constructor(public statisticService: StatisticsService) {}
 
   showData(data: string): string[] {
     return data.split('\n')
-  }
-
-  async changeYear(event): Promise<void> {
-    const year = event.target.value
-    const statistic = await this.statisticService.getData({
-      url: this.statisticService.currentStatistic.url,
-      yearSelector: year
-    })
-    this.statisticService.onChange.emit(statistic)
   }
 }
